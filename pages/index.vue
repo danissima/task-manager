@@ -10,9 +10,16 @@
         </h2>
         <div class="tasks__grid">
           <TaskCard
-            v-for="task in tasks"
+            v-for="task in tasksToShow"
             :key="task.id"
             :info="task"
+          />
+        </div>
+        <div class="tasks__pagination">
+          <UPagination
+            v-model="currentPage"
+            :page-count="TASKS_PER_PAGE"
+            :total="tasks.length"
           />
         </div>
       </AppContainer>
@@ -27,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { useTasksStore } from '~/store/tasks'
+  import { type Task, useTasksStore } from '~/store/tasks'
   import { useUsersStore } from '~/store/users'
 
   useHead({
@@ -38,8 +45,18 @@
     middleware: ['auth'],
   })
 
-  const { tasks } = useTasksStore()
+  const { tasks } = storeToRefs(useTasksStore())
   const { currentUser } = storeToRefs(useUsersStore())
+
+  const TASKS_PER_PAGE: number = 3
+  const currentPage = ref<number>(1)
+
+  const tasksToShow = computed<Task[]>(() => {
+    const startIndex = (currentPage.value - 1) * TASKS_PER_PAGE
+    const endIndex = startIndex + TASKS_PER_PAGE
+
+    return tasks.value.slice(startIndex, endIndex)
+  })
 
   const userName = computed<string>(() => {
     if (!currentUser.value) return ''
@@ -54,12 +71,14 @@
 
     &__grid {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 1fr;
       gap: toRem(16);
+    }
 
-      @include break($md) {
-        grid-template-columns: 1fr;
-      }
+    &__pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: toRem(24);
     }
   }
 </style>
