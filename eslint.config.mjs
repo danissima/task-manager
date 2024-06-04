@@ -1,18 +1,12 @@
 // @ts-check
 import withNuxt from './.nuxt/eslint.config.mjs'
+import eslintPluginPrettierRecommended from 'eslint-plugin-prettier/recommended'
 
-export default withNuxt({
-  rules: {
-    'vue/max-attributes-per-line': [
-      'error',
-      {
-        singleline: {
-          max: 1,
-        },
-        multiline: {
-          max: 1,
-        },
-      },
-    ],
+export default withNuxt(
+  {
+    rules: {
+      'prettier/prettier': ['warn'],
+    },
   },
-})
+  eslintPluginPrettierRecommended,
+)
