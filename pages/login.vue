@@ -14,6 +14,7 @@
           <UInput
             v-model="state.email"
             placeholder="me@example.com"
+            autocomplete="email"
           />
         </UFormGroup>
 
