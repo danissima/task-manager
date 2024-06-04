@@ -1,6 +1,8 @@
 <template>
   <header class="header">
-    <h1>Задачник</h1>
+    <h1>
+      <NuxtLink to="/">Задачник</NuxtLink>
+    </h1>
   </header>
 </template>
 
