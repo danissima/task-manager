@@ -2,3 +2,7 @@
 @import '_general.scss';
 @import '_reset.scss';
 @import '_typography.scss';
+
+section {
+  padding: toRem(40) 0;
+}

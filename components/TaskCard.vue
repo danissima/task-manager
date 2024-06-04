@@ -29,4 +29,13 @@
   defineProps<Props>()
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+  .task-card {
+    display: flex;
+    flex-direction: column;
+
+    & > div:last-child {
+      margin-top: auto;
+    }
+  }
+</style>

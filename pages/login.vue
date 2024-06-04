@@ -2,10 +2,11 @@
   <section class="login">
     <AppContainer>
       <UForm
+        ref="form"
         :state="state"
         :schema="schema"
         class="login__form"
-        @submit.prevent="handleSubmit"
+        @submit="handleSubmit"
       >
         <UFormGroup
           label="Почта"
@@ -26,7 +27,7 @@
             v-model="state.password"
             type="password"
             autocomplete="current-password"
-            placeholder="123456"
+            placeholder="12345"
           />
         </UFormGroup>
 
@@ -44,16 +45,16 @@
 
 <script lang="ts" setup>
   import { object, string, type InferType } from 'yup'
-  import type { FormSubmitEvent } from '#ui/types'
+  import type { FormSubmitEvent, Form } from '#ui/types'
+  import { useUsersStore } from '~/store/users'
 
   useHead({
     title: 'Вход',
   })
 
-  interface LoginState {
-    email: string
-    password: string
-  }
+  definePageMeta({
+    middleware: ['logged-in'],
+  })
 
   const schema = object({
     email: string().email('Неверная почта').required('Обязательное поле'),
@@ -62,13 +63,54 @@
 
   type Schema = InferType<typeof schema>
 
+  interface LoginState {
+    email: string
+    password: string
+  }
+
+  const usersStore = useUsersStore()
+  const { users } = usersStore
+  const { currentUser } = storeToRefs(usersStore)
+
+  const form = ref<Form<null>>()
   const state = ref<LoginState>({
     email: '',
     password: '',
   })
 
   function handleSubmit(event: FormSubmitEvent<Schema>) {
-    console.log(event.data)
+    if (!form.value) return
+
+    /* существует ли юзер */
+    const userIndex = users.map(user => user.email).indexOf(event.data.email)
+
+    if (userIndex === -1) {
+      form.value.setErrors([
+        {
+          message: 'Пользователь не найден',
+          path: 'email',
+        },
+      ])
+
+      return
+    }
+
+    /* верный ли пароль */
+    const isPasswordCorrect = users[userIndex].password === event.data.password
+
+    if (!isPasswordCorrect) {
+      form.value.setErrors([
+        {
+          message: 'Неверный пароль',
+          path: 'password',
+        },
+      ])
+
+      return
+    }
+
+    currentUser.value = users[userIndex]
+    useRouter().push('/')
   }
 </script>
 
