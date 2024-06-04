@@ -1,8 +1,6 @@
 <template>
   <TheHeader />
-  <main class="main">
-    <NuxtPage />
-  </main>
+  <NuxtPage />
   <TheFooter />
 </template>
 
@@ -30,9 +28,5 @@
     display: flex;
     min-height: 100%;
     height: auto;
-  }
-
-  .main {
-    height: 100%;
   }
 </style>

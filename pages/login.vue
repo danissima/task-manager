@@ -1,46 +1,48 @@
 <template>
-  <section class="login">
-    <AppContainer>
-      <UForm
-        ref="form"
-        :state="state"
-        :schema="schema"
-        class="login__form"
-        @submit="handleSubmit"
-      >
-        <UFormGroup
-          label="Почта"
-          name="email"
+  <main class="main">
+    <section class="login">
+      <AppContainer>
+        <UForm
+          ref="form"
+          :state="state"
+          :schema="schema"
+          class="form"
+          @submit="handleSubmit"
         >
-          <UInput
-            v-model="state.email"
-            placeholder="me@example.com"
-            autocomplete="email"
-          />
-        </UFormGroup>
+          <UFormGroup
+            label="Почта"
+            name="email"
+          >
+            <UInput
+              v-model="state.email"
+              placeholder="me@example.com"
+              autocomplete="email"
+            />
+          </UFormGroup>
 
-        <UFormGroup
-          label="Пароль"
-          name="password"
-        >
-          <UInput
-            v-model="state.password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="12345"
-          />
-        </UFormGroup>
+          <UFormGroup
+            label="Пароль"
+            name="password"
+          >
+            <UInput
+              v-model="state.password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="12345"
+            />
+          </UFormGroup>
 
-        <UButton
-          class="login__submit"
-          block
-          type="submit"
-        >
-          Войти
-        </UButton>
-      </UForm>
-    </AppContainer>
-  </section>
+          <UButton
+            class="login__submit"
+            block
+            type="submit"
+          >
+            Войти
+          </UButton>
+        </UForm>
+      </AppContainer>
+    </section>
+  </main>
 </template>
 
 <script lang="ts" setup>
@@ -113,17 +115,3 @@
     useRouter().push('/')
   }
 </script>
-
-<style lang="scss">
-  .login {
-    &__form {
-      max-width: 512px;
-      margin: 0 auto;
-    }
-
-    /* отступ между элементами формы */
-    &__form > * + * {
-      margin-top: toRem(16);
-    }
-  }
-</style>

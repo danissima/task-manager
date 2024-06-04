@@ -6,7 +6,10 @@
 
     <p>{{ info.description }}</p>
 
-    <template #footer>
+    <template
+      v-if="currentUser?.role === 'admin'"
+      #footer
+    >
       <UButton
         size="sm"
         icon="i-heroicons-pencil-square"
@@ -21,12 +24,15 @@
 
 <script lang="ts" setup>
   import type { Task } from '~/store/tasks'
+  import { useUsersStore } from '~/store/users'
 
   interface Props {
     info: Task
   }
 
   defineProps<Props>()
+
+  const { currentUser } = useUsersStore()
 </script>
 
 <style lang="scss">

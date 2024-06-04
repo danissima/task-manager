@@ -3,6 +3,25 @@
 @import '_reset.scss';
 @import '_typography.scss';
 
+.main {
+  height: 100%;
+}
+
 section {
   padding: toRem(40) 0;
+}
+
+section h2 {
+  margin-bottom: toRem(24);
+  text-align: center;
+}
+
+.form {
+  max-width: 512px;
+  margin: 0 auto;
+
+  /* отступ между элементами формы */
+  & > * + * {
+    margin-top: toRem(16);
+  }
 }

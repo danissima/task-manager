@@ -1,21 +1,29 @@
 <template>
-  <section class="tasks">
-    <AppContainer>
-      <h2
-        v-if="userName"
-        class="tasks__title"
-      >
-        С возвращением, {{ userName }}!
-      </h2>
-      <div class="tasks__grid">
-        <TaskCard
-          v-for="task in tasks"
-          :key="task.id"
-          :info="task"
-        />
-      </div>
-    </AppContainer>
-  </section>
+  <main class="main">
+    <section class="tasks">
+      <AppContainer>
+        <h2
+          v-if="userName"
+          class="tasks__title"
+        >
+          С возвращением, {{ userName }}!
+        </h2>
+        <div class="tasks__grid">
+          <TaskCard
+            v-for="task in tasks"
+            :key="task.id"
+            :info="task"
+          />
+        </div>
+      </AppContainer>
+    </section>
+    <section class="new-task">
+      <AppContainer>
+        <h2>Новая задача</h2>
+        <NewTaskForm />
+      </AppContainer>
+    </section>
+  </main>
 </template>
 
 <script lang="ts" setup>
@@ -43,11 +51,6 @@
 <style lang="scss">
   .tasks {
     padding: toRem(40) 0;
-
-    &__title {
-      text-align: center;
-      margin-bottom: toRem(24);
-    }
 
     &__grid {
       display: grid;
