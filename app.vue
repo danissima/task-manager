@@ -10,10 +10,10 @@
   useHead({
     titleTemplate(title) {
       if (!title) {
-        return 'Task Manager'
+        return 'Задачник'
       }
 
-      return `${title} | Task Manager`
+      return `${title} | Задачник`
     },
   })
 </script>
@@ -33,6 +33,6 @@
   }
 
   .main {
-    margin-bottom: toRem(32);
+    height: 100%;
   }
 </style>

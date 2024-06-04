@@ -1,6 +1,6 @@
 <template>
   <header class="header">
-    <h1>Привет!</h1>
+    <h1>Задачник</h1>
   </header>
 </template>
 

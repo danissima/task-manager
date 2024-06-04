@@ -1,5 +1,9 @@
 /* fonts */
-$font-fallback: Helvetica Neue, Helvetica, Arial, sans-serif;
+$font-fallback:
+  Helvetica Neue,
+  Helvetica,
+  Arial,
+  sans-serif;
 $font-primary: 'Rubik', $font-fallback;
 
 /* breakpoints */
@@ -10,8 +14,8 @@ $md: 768px;
 $sm: 576px;
 
 /* transitions */
-$transition: .2s ease-out;
-$transition-slow: .4s ease-out;
+$transition: 0.2s ease-out;
+$transition-slow: 0.4s ease-out;
 
 /* colors */
 $white: #fff;
