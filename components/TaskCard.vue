@@ -1,10 +1,29 @@
 <template>
   <UCard class="task-card">
     <template #header>
-      <h3>{{ info.id }}. {{ info.title }}</h3>
+      <header class="task-card__header">
+        <h3>{{ info.id }}. {{ info.title }}</h3>
+        <div class="task-card__badge">
+
+        <UBadge
+          v-if="info.isCompleted"
+          color="green"
+          label="Выполнена"
+        />
+        <UBadge
+          v-else
+          color="red"
+          label="Не выполнена"
+        />
+        </div>
+      </header>
+
+      <div class="task-card__creator">
+        <i>{{ info.creatorEmail }}</i>
+      </div>
     </template>
 
-    <p>{{ info.description }}</p>
+    <p v-if="info.description">{{ info.description }}</p>
 
     <template
       v-if="currentUser?.role === 'admin'"
@@ -39,6 +58,22 @@
   .task-card {
     display: flex;
     flex-direction: column;
+
+    &__header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: toRem(8);
+      margin-bottom: toRem(8);
+
+      @include break($md) {
+        grid-template-columns: auto;
+      }
+    }
+
+    &__creator {
+      font-size: toRem(14);
+      color: $gray-100;
+    }
 
     & > div:last-child {
       margin-top: auto;
