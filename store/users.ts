@@ -29,4 +29,10 @@ export const useUsersStore = defineStore('users', {
       ],
     }
   },
+
+  getters: {
+    usersEmails(): string[] {
+      return this.users.map(user => user.email)
+    },
+  },
 })

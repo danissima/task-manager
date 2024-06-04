@@ -71,7 +71,7 @@
   }
 
   const usersStore = useUsersStore()
-  const { users } = usersStore
+  const { users, usersEmails } = usersStore
   const { currentUser } = storeToRefs(usersStore)
 
   const form = ref<Form<null>>()
@@ -84,7 +84,7 @@
     if (!form.value) return
 
     /* существует ли юзер */
-    const userIndex = users.map(user => user.email).indexOf(event.data.email)
+    const userIndex = usersEmails.indexOf(event.data.email)
 
     if (userIndex === -1) {
       form.value.setErrors([
