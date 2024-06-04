@@ -15,6 +15,10 @@
 <script lang="ts" setup>
   import { useTasksStore } from '~/store/tasks'
 
+  definePageMeta({
+    middleware: ['auth'],
+  })
+
   const { tasks } = useTasksStore()
 </script>
 

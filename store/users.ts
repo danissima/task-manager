@@ -8,11 +8,13 @@ interface User {
 
 interface UsersStore {
   users: User[]
+  currentUser: User | null
 }
 
 export const useUsersStore = defineStore('users', {
   state: (): UsersStore => {
     return {
+      currentUser: null,
       users: [
         {
           email: 'user@user.com',
