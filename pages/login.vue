@@ -10,6 +10,7 @@
           @submit="handleSubmit"
         >
           <UFormGroup
+            required
             label="Почта"
             name="email"
           >
@@ -21,6 +22,7 @@
           </UFormGroup>
 
           <UFormGroup
+            required
             label="Пароль"
             name="password"
           >
@@ -70,9 +72,7 @@
     password: string
   }
 
-  const usersStore = useUsersStore()
-  const { users, usersEmails } = usersStore
-  const { currentUser } = storeToRefs(usersStore)
+  const { users, usersEmails, login } = useUsersStore()
 
   const form = ref<Form<null>>()
   const state = ref<LoginState>({
@@ -111,7 +111,6 @@
       return
     }
 
-    currentUser.value = users[userIndex]
-    useRouter().push('/')
+    login(users[userIndex])
   }
 </script>

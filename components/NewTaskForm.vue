@@ -6,6 +6,7 @@
     @submit="handleSubmit"
   >
     <UFormGroup
+      required
       label="Название"
       name="title"
     >
@@ -29,6 +30,7 @@
     </UFormGroup>
 
     <UFormGroup
+      required
       label="Ваша почта"
       name="creatorEmail"
     >

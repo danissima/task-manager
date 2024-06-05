@@ -33,10 +33,17 @@
     </template>
 
     <!-- описание -->
-    <p v-if="!isEditing && info.description">{{ info.description }}</p>
+    <p
+      v-if="!isEditing && info.description"
+      class="task-card__description"
+    >
+      {{ info.description }}
+    </p>
     <UTextarea
       v-if="isEditing"
       v-model="formState.description"
+      autoresize
+      :maxrows="5"
       name="description"
     />
 
@@ -112,9 +119,17 @@
       }
     }
 
+    &__header h3 {
+      word-break: break-word;
+    }
+
     &__creator {
       font-size: toRem(14);
       color: $gray-100;
+    }
+
+    &__description {
+      white-space: pre-wrap;
     }
 
     & > div:nth-child(2):empty {

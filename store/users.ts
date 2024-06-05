@@ -31,8 +31,24 @@ export const useUsersStore = defineStore('users', {
   },
 
   getters: {
+    isLogged(): boolean {
+      return this.currentUser !== null
+    },
+
     usersEmails(): string[] {
       return this.users.map(user => user.email)
+    },
+  },
+
+  actions: {
+    login(user: User) {
+      this.currentUser = user
+      useRouter().push('/')
+    },
+
+    logout() {
+      this.currentUser = null
+      useRouter().push('/login')
     },
   },
 })

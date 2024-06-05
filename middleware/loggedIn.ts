@@ -1,9 +1,9 @@
 import { useUsersStore } from '~/store/users'
 
 export default defineNuxtRouteMiddleware(() => {
-  const { currentUser } = useUsersStore()
+  const { isLogged } = useUsersStore()
 
-  if (currentUser !== null) {
+  if (isLogged) {
     return navigateTo('/')
   }
 })

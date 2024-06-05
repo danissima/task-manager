@@ -1,7 +1,7 @@
 <template>
   <UForm
-    :state="state"
     v-if="isEditing"
+    :state="state"
     @submit="handleSubmit"
   >
     <TaskCardContent

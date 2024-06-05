@@ -26,9 +26,17 @@ h1 {
 h2 {
   font-size: toRem(44);
   font-weight: 600;
+
+  @include break($md) {
+    font-size: toRem(28);
+  }
 }
 
 h3 {
   font-size: toRem(32);
   font-weight: 600;
+
+  @include break($md) {
+    font-size: toRem(22);
+  }
 }
