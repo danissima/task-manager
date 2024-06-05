@@ -1,6 +1,5 @@
 <template>
   <UForm
-    ref="form"
     :state="state"
     :schema="schema"
     class="form"
@@ -51,12 +50,12 @@
 
 <script lang="ts" setup>
   import { object, string, type InferType } from 'yup'
-  import type { FormSubmitEvent, Form } from '#ui/types'
+  import type { FormSubmitEvent } from '#ui/types'
   import { useUsersStore } from '~/store/users'
-  import { useTasksStore, type Task } from '~/store/tasks'
+  import { useTasksStore, type TaskCreationState } from '~/store/tasks'
 
   const { currentUser } = storeToRefs(useUsersStore())
-  const { tasks } = storeToRefs(useTasksStore())
+  const { addTask } = useTasksStore()
 
   const schema = object({
     title: string()
@@ -76,29 +75,16 @@
 
   type Schema = InferType<typeof schema>
 
-  type NewTaskState = Omit<Task, 'id' | 'isCompleted'>
-
-  const form = ref<Form<null>>()
-  const state = ref<NewTaskState>({
+  const state = ref<TaskCreationState>({
     title: '',
     description: '',
     creatorEmail: '',
   })
 
   function handleSubmit(event: FormSubmitEvent<Schema>) {
-    if (!form.value) return
-
-    const lastExistingTaskId = tasks.value.length
-      ? tasks.value[tasks.value.length - 1].id
-      : 1
-
-    tasks.value.push({
-      ...event.data,
-      id: lastExistingTaskId + 1,
-      isCompleted: false,
-    })
-
+    addTask(event.data)
     resetForm()
+    useToast().add({ title: 'Задача успешно добавлена!' })
   }
 
   function resetForm() {

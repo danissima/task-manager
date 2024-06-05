@@ -117,6 +117,10 @@
       color: $gray-100;
     }
 
+    & > div:nth-child(2):empty {
+      display: none;
+    }
+
     & > div:last-child {
       margin-top: auto;
     }

@@ -2,6 +2,7 @@
   <TheHeader />
   <NuxtPage />
   <TheFooter />
+  <UNotifications />
 </template>
 
 <script setup lang="ts">
