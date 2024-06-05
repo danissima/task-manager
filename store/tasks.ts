@@ -7,6 +7,8 @@ export interface TasksFilters {
   isSortAscending: boolean
 }
 
+export type TaskEditingState = Pick<Task, 'isCompleted' | 'description'>
+
 export interface Task {
   id: number
   title: string
@@ -122,6 +124,21 @@ export const useTasksStore = defineStore('tasks', {
       const endIndex = startIndex + this.pagination.tasksPerPage
 
       return result.slice(startIndex, endIndex)
+    },
+  },
+
+  actions: {
+    // addTask(newTask: Task) {
+
+    // }
+    editTask(id: Task['id'], newData: TaskEditingState) {
+      const taskIndex = this.tasks.map(task => task.id).indexOf(id)
+      const taskToEdit = this.tasks[taskIndex]
+
+      this.tasks[taskIndex] = {
+        ...taskToEdit,
+        ...newData,
+      }
     },
   },
 })

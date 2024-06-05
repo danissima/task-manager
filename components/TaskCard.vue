@@ -1,82 +1,57 @@
 <template>
-  <UCard class="task-card">
-    <template #header>
-      <header class="task-card__header">
-        <h3>{{ info.id }}. {{ info.title }}</h3>
-        <div class="task-card__badge">
+  <UForm
+    :state="state"
+    v-if="isEditing"
+    @submit="handleSubmit"
+  >
+    <TaskCardContent
+      v-model:formState="state"
+      :info="info"
+      :is-editing="isEditing"
+    />
+  </UForm>
 
-        <UBadge
-          v-if="info.isCompleted"
-          color="green"
-          label="Выполнена"
-        />
-        <UBadge
-          v-else
-          color="red"
-          label="Не выполнена"
-        />
-        </div>
-      </header>
-
-      <div class="task-card__creator">
-        <i>{{ info.creatorEmail }}</i>
-      </div>
-    </template>
-
-    <p v-if="info.description">{{ info.description }}</p>
-
-    <template
-      v-if="currentUser?.role === 'admin'"
-      #footer
-    >
-      <UButton
-        size="sm"
-        icon="i-heroicons-pencil-square"
-        color="primary"
-        variant="soft"
-        :trailing="false"
-        >Редактировать</UButton
-      >
-    </template>
-  </UCard>
+  <TaskCardContent
+    v-else
+    :info="info"
+    :is-editing="isEditing"
+    @editing-change="isEditing = $event"
+  />
 </template>
 
 <script lang="ts" setup>
-  import type { Task } from '~/store/tasks'
-  import { useUsersStore } from '~/store/users'
+  import { boolean, object, string, type InferType } from 'yup'
+  import type { FormSubmitEvent } from '#ui/types'
+  import {
+    useTasksStore,
+    type Task,
+    type TaskEditingState,
+  } from '~/store/tasks'
 
   interface Props {
     info: Task
   }
 
-  defineProps<Props>()
+  const props = defineProps<Props>()
 
-  const { currentUser } = useUsersStore()
-</script>
+  const schema = object({
+    description: string().default(''),
+    isCompleted: boolean().default(props.info.isCompleted),
+  })
 
-<style lang="scss">
-  .task-card {
-    display: flex;
-    flex-direction: column;
+  type Schema = InferType<typeof schema>
 
-    &__header {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: toRem(8);
-      margin-bottom: toRem(8);
+  const { editTask } = useTasksStore()
 
-      @include break($md) {
-        grid-template-columns: auto;
-      }
-    }
+  const state = ref<TaskEditingState>({
+    description: props.info.description,
+    isCompleted: props.info.isCompleted,
+  })
 
-    &__creator {
-      font-size: toRem(14);
-      color: $gray-100;
-    }
+  const isEditing = ref<boolean>(false)
 
-    & > div:last-child {
-      margin-top: auto;
-    }
+  function handleSubmit(event: FormSubmitEvent<Schema>) {
+    editTask(props.info.id, event.data)
+    isEditing.value = false
   }
-</style>
+</script>
